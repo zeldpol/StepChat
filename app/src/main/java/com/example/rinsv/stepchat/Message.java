@@ -12,9 +12,12 @@ public class Message {
     private String autor;
     private long timeMessage;
 
-    public Message(String textMessage, String autor) {
+    public boolean left;
+
+    public Message(String textMessage, String autor, boolean left) {
         this.textMessage = textMessage;
         this.autor = autor;
+        this.left = left;
 
         timeMessage = new Date().getTime();
     }

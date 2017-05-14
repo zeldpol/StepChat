@@ -1,7 +1,15 @@
 package com.example.rinsv.stepchat;
 
+import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.AbsListView;
 import android.widget.Button;
 
 import com.google.android.gms.auth.api.Auth;
@@ -19,9 +27,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -30,32 +41,43 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.URL;
 
 
 public class MainActivity extends FragmentActivity {
+    private static final String TAG = "ChatActivity";
 
     private static int SIGN_IN_REQUEST_CODE = 1;
     private FirebaseListAdapter<Message> adapter;
     RelativeLayout activity_main;
-    Button button;
+    ImageButton buttonSend;
+    private ListView listMessages;
+    private EditText input;
+    Intent intent;
+    private boolean side = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
         setContentView(R.layout.activity_main);
 
         activity_main = (RelativeLayout)findViewById(R.id.activity_main);
-        button = (Button)findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonSend = (ImageButton)findViewById(R.id.buttonSend);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 EditText input = (EditText)findViewById(R.id.editText);
                 FirebaseDatabase.getInstance().getReference().push()
                         .setValue(new Message(input.getText().toString(),
-                                FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                                FirebaseAuth.getInstance().getCurrentUser().getEmail(), side));
+
                 input.setText("");
+                side = !side;
             }
         });
+
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivityForResult(AuthUI.getInstance()
@@ -68,7 +90,7 @@ public class MainActivity extends FragmentActivity {
 
     private void displayChat() {
 
-        ListView listMessages = (ListView)findViewById(R.id.listView);
+        listMessages = (ListView)findViewById(R.id.listView);
         adapter = new FirebaseListAdapter<Message>(this, Message.class, R.layout.item, FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, Message model, int position) {
@@ -80,11 +102,25 @@ public class MainActivity extends FragmentActivity {
 
                 textMessage.setText(model.getTextMessage());
                 autor.setText(model.getAutor());
-                timeMessage.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getTimeMessage()));
+                timeMessage.setText(DateFormat.format("HH:mm", model.getTimeMessage()));
+
             }
+
         };
+
+        listMessages.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         listMessages.setAdapter(adapter);
-    }
+
+        //to scroll the list view to bottom on data change
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                listMessages.setSelection(adapter.getCount() - 1);
+            }
+        });
+
+     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
