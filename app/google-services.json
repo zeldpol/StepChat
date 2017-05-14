@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "206721685256",
+    "firebase_url": "https://stepchat-328ca.firebaseio.com",
+    "project_id": "stepchat-328ca",
+    "storage_bucket": "stepchat-328ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206721685256:android:a483100448222d74",
+        "android_client_info": {
+          "package_name": "com.example.rinsv.stepchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206721685256-to7ebvl04hh0jmioh9t1bacctltvcq5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rinsv.stepchat",
+            "certificate_hash": "13722df72bf351413068335d720aece749af31ae"
+          }
+        },
+        {
+          "client_id": "206721685256-cm6eq0rgh563ivlumdt49sfaubr5nf40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX_i3FeNokL5NytViPqrB-NJ2__FtEMbo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206721685256-cm6eq0rgh563ivlumdt49sfaubr5nf40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
