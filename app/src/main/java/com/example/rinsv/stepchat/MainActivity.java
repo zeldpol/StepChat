@@ -1,5 +1,8 @@
 package com.example.rinsv.stepchat;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -58,6 +61,7 @@ public class MainActivity extends FragmentActivity {
     ImageButton buttonSend;
     private ListView listMessages;
     private EditText input;
+    private LinearLayout liner;
     Intent intent;
     private boolean side = false;
     public String mainName;
@@ -74,7 +78,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
 
-                EditText input = (EditText)findViewById(R.id.editText);
+                input = (EditText)findViewById(R.id.editText);
                 if (!input.getText().toString().equals("")) {
                     FirebaseDatabase.getInstance().getReference().push()
                             .setValue(new Message(input.getText().toString(),
@@ -83,7 +87,6 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
-
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             startActivityForResult(AuthUI.getInstance()
@@ -96,6 +99,7 @@ public class MainActivity extends FragmentActivity {
             displayChat();
             mainName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         }
+
     }
 
     private void displayChat() {
@@ -129,13 +133,12 @@ public class MainActivity extends FragmentActivity {
                 }else {
                     textMessage.setBackgroundResource(R.drawable.bubble_b);
                     lp2.gravity = Gravity.LEFT;
-                    autor.setTextSize(14);
+                    autor.setTextSize(15);
                 }
 
                 autor.setLayoutParams(lp2);
                 textMessage.setLayoutParams(lp2);
                 timeMessage.setLayoutParams(lp2);
-
 
             }
 

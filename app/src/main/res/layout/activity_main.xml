@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:stackFromBottom="true"
         android:divider="@null"
-        android:background="@color/DefBackgroud"
+        android:background="@drawable/back_msg"
         android:layout_above="@+id/linearLayout"
         android:paddingLeft="@dimen/activity_horizontal_margin"/>
 
@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/white"
+        android:background="@drawable/back_enr"
         android:id="@+id/linearLayout">
 
         <EditText
@@ -42,7 +42,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="You message..."
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:backgroundTint="@color/colorAccent"/>
 
         <ImageButton
             android:id="@+id/buttonSend"
@@ -56,8 +57,7 @@
             android:background="@null"
             android:padding="10dp"
             android:src="@drawable/ic_msg_panel_send"
-            android:text="Send"
-            android:tint="@color/colorAccent" />
+            android:text="Send"/>
     </LinearLayout>
 
 
