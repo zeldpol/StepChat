@@ -1,5 +1,7 @@
 package com.example.rinsv.stepchat;
 
+import android.content.Intent;
+
 import java.util.Date;
 
 /**
@@ -11,8 +13,8 @@ public class Message {
     private String textMessage;
     private String autor;
     private long timeMessage;
-
-    public boolean left;
+    public  boolean left;
+    Intent intent;
 
     public Message(String textMessage, String autor, boolean left) {
         this.textMessage = textMessage;
@@ -48,6 +50,7 @@ public class Message {
     public void setTimeMessage(long timeMessage) {
         this.timeMessage = timeMessage;
     }
+
 
 
 }

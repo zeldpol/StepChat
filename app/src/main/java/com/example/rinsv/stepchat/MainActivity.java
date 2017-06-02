@@ -8,7 +8,9 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +46,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.net.URL;
 
+import static com.example.rinsv.stepchat.R.id.tvUser;
+
 
 public class MainActivity extends FragmentActivity {
     private static final String TAG = "ChatActivity";
@@ -55,6 +60,7 @@ public class MainActivity extends FragmentActivity {
     private EditText input;
     Intent intent;
     private boolean side = false;
+    public String mainName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +75,12 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View view) {
 
                 EditText input = (EditText)findViewById(R.id.editText);
-                FirebaseDatabase.getInstance().getReference().push()
-                        .setValue(new Message(input.getText().toString(),
-                                FirebaseAuth.getInstance().getCurrentUser().getEmail(), side));
-
-                input.setText("");
-                side = !side;
+                if (!input.getText().toString().equals("")) {
+                    FirebaseDatabase.getInstance().getReference().push()
+                            .setValue(new Message(input.getText().toString(),
+                                    FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), side));
+                    input.setText("");
+                }
             }
         });
 
@@ -83,26 +89,53 @@ public class MainActivity extends FragmentActivity {
             startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .build(), SIGN_IN_REQUEST_CODE);
+            mainName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+
+
         } else {
             displayChat();
+            mainName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         }
     }
 
     private void displayChat() {
 
         listMessages = (ListView)findViewById(R.id.listView);
+
+
         adapter = new FirebaseListAdapter<Message>(this, Message.class, R.layout.item, FirebaseDatabase.getInstance().getReference()) {
             @Override
             protected void populateView(View v, Message model, int position) {
 
+                  LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
                 TextView textMessage, autor, timeMessage;
                 textMessage = (TextView)v.findViewById(R.id.tvMessage);
-                autor = (TextView)v.findViewById(R.id.tvUser);
+                autor = (TextView)v.findViewById(tvUser);
                 timeMessage = (TextView)v.findViewById(R.id.tvTime);
 
-                textMessage.setText(model.getTextMessage());
+
                 autor.setText(model.getAutor());
+                textMessage.setText(model.getTextMessage());
                 timeMessage.setText(DateFormat.format("HH:mm", model.getTimeMessage()));
+
+                if (autor.getText().equals(mainName)) {
+                    textMessage.setBackgroundResource(R.drawable.bubble_a);
+                    lp2.gravity = Gravity.RIGHT;
+                    autor.setText("");
+                    autor.setTextSize(5);
+
+
+                }else {
+                    textMessage.setBackgroundResource(R.drawable.bubble_b);
+                    lp2.gravity = Gravity.LEFT;
+                    autor.setTextSize(14);
+                }
+
+                autor.setLayoutParams(lp2);
+                textMessage.setLayoutParams(lp2);
+                timeMessage.setLayoutParams(lp2);
+
 
             }
 

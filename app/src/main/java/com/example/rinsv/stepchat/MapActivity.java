@@ -11,7 +11,10 @@ package com.example.rinsv.stepchat;
         import com.google.android.gms.maps.MapFragment;
         import com.google.android.gms.maps.OnMapReadyCallback;
         import com.google.android.gms.maps.model.LatLng;
+        import com.google.android.gms.maps.model.Marker;
         import com.google.android.gms.maps.model.MarkerOptions;
+
+        import java.util.Map;
 
 public class MapActivity extends FragmentActivity
         implements OnMapReadyCallback {

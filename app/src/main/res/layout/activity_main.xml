@@ -5,11 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.rinsv.stepchat.MainActivity">
+        tools:context="com.example.rinsv.stepchat.MainActivity">
 
 
     <ListView
@@ -20,35 +16,49 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:stackFromBottom="true"
-        android:layout_above="@+id/editText"
-        android:divider="@null"/>
+        android:divider="@null"
+        android:background="@color/DefBackgroud"
+        android:layout_above="@+id/linearLayout"
+        android:paddingLeft="@dimen/activity_horizontal_margin"/>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="279dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.95"
-        android:ems="10"
-        android:hint="You message..."
-        android:inputType="textPersonName"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/button2"
-        android:layout_toStartOf="@+id/button2" />
+        android:background="@color/white"
+        android:id="@+id/linearLayout">
 
-    <ImageButton
-        android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send"
-        android:src="@android:drawable/ic_menu_send"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/listView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:tint="@color/colorAccent"
-        android:background="@null"/>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="279dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="You message..."
+            android:inputType="textPersonName" />
+
+        <ImageButton
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/listView"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@drawable/ic_msg_panel_send"
+            android:text="Send"
+            android:tint="@color/colorAccent" />
+    </LinearLayout>
 
 
 </RelativeLayout>
